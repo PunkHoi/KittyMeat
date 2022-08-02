@@ -13,20 +13,14 @@ namespace ProceduralToolkit.Examples
         public Transform cameraTransform;
         public Transform target;
         [Header("Position")]
-        public float distanceMin = 10;
-        public float distanceMax = 30;
-        public float yOffset = 0;
-        public float scrollSensitivity = 1000;
-        public float scrollSmoothing = 10;
+        public float distance = 30;
+        public float yOffset = 1;
         [Header("Rotation")]
         public float tiltMin = -85;
         public float tiltMax = 85;
         public float rotationSensitivity = 0.5f;
         public float rotationSpeed = 20;
 
-        private float distance;
-        private float scrollDistance;
-        private float velocity;
         private float lookAngle;
         private float tiltAngle;
         private Quaternion rotation;
@@ -35,8 +29,7 @@ namespace ProceduralToolkit.Examples
         {
             base.Awake();
             tiltAngle = (tiltMin + tiltMax) / 2;
-            distance = scrollDistance = (distanceMax + distanceMin) / 2;
-
+            
             if (cameraTransform == null || target == null) return;
 
             cameraTransform.rotation = rotation = Quaternion.Euler(tiltAngle, lookAngle, 0);
@@ -51,18 +44,6 @@ namespace ProceduralToolkit.Examples
             {
                 cameraTransform.rotation = Quaternion.Lerp(cameraTransform.rotation, rotation,
                     Time.deltaTime * rotationSpeed);
-            }
-
-            float scroll = Input.GetAxis("Mouse ScrollWheel");
-            if (scroll != 0)
-            {
-                scrollDistance -= scroll * Time.deltaTime * scrollSensitivity;
-                scrollDistance = Mathf.Clamp(scrollDistance, distanceMin, distanceMax);
-            }
-
-            if (distance != scrollDistance)
-            {
-                distance = Mathf.SmoothDamp(distance, scrollDistance, ref velocity, Time.deltaTime * scrollSmoothing);
             }
 
             cameraTransform.position = CalculateCameraPosition();
