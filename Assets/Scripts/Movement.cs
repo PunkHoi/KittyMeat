@@ -4,47 +4,38 @@ using UnityEngine;
 
 public class Movement : MonoBehaviour
 {
-    public float mouseSensitivity = 3f;
-    public Rigidbody rb;
-    public Camera cam;
-    public float speed = 5f;
-    public Vector3 prev_pos;
-    private Vector3 transfer;
-    public float minimumX = -60f;
-    public float maximumX = 600f;
-    public float minimumY = -60f;
-    public float maximumY = 60f;
-    float rotationX = 0f;
-    float rotationY = 0f;
-    Quaternion originalRotation;
+    public float Speed = 5f;
+    public float MaxSpeed = 1f;
+    public bool IsRun;
+    public FloatingJoystick Joystick;
+
+    private Rigidbody _rigidbody;
+    private Animator _animator;
 
     void Start()
     {
-        rb = GetComponent<Rigidbody>();
-        originalRotation = transform.rotation;
+        _rigidbody = GetComponent<Rigidbody>();
+        _animator = GetComponent<Animator>();
     }
-
     void Update()
     {
-            
-            rotationX += Input.GetAxis("Mouse X") * mouseSensitivity;
-            rotationY += Input.GetAxis("Mouse Y") * mouseSensitivity;
-            rotationX = ClampAngle(rotationX, minimumX, maximumX);
-            rotationY = ClampAngle(rotationY, minimumY, maximumY);
-
-            Quaternion xQuaternion = Quaternion.AngleAxis(rotationX, Vector3.up);
-            Quaternion yQuaternion = Quaternion.AngleAxis(rotationY, Vector3.left);
-            cam.transform.Rotate(-rotationY, rotationX, 0, Space.World);
-            cam.transform.rotation = originalRotation * xQuaternion * yQuaternion;
-            rb.AddForce(new Vector3(0, 0, 1 * Input.GetAxis("Vertical"))) ;
-            rb.AddForce(new Vector3(1 * Input.GetAxis("Horizontal"),0, 0));
+        if ((Joystick.Direction.magnitude > 0) != IsRun)
+            _animator.SetBool("IsRun", IsRun = !IsRun);
+        if (Joystick.Direction.magnitude > 0.1)
+            transform.rotation = Quaternion.LookRotation(new Vector3(
+                Joystick.Direction.x,
+                0,
+                Joystick.Direction.y
+            ));
     }
-
-    public static float ClampAngle(float angle, float min, float max)
+    void FixedUpdate()
     {
-        if (angle < -360F) angle += 360F;
-        if (angle > 360F) angle -= 360F;
-        return Mathf.Clamp(angle, min, max);
+        float _maxSpeed = MaxSpeed;
+        if (Joystick.Direction.magnitude == 0)
+            _maxSpeed = 0;
+        _rigidbody.velocity = new Vector3(
+            Mathf.Clamp(_rigidbody.velocity.x + Joystick.Direction.x * Speed, -_maxSpeed, _maxSpeed),
+            _rigidbody.velocity.y,
+            Mathf.Clamp(_rigidbody.velocity.z + Joystick.Direction.y * Speed, -_maxSpeed, _maxSpeed));
     }
-
 }
