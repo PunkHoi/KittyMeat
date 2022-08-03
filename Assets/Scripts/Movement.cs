@@ -5,9 +5,13 @@ using UnityEngine;
 public class Movement : MonoBehaviour
 {
     public float Speed = 5f;
-    public bool IsRun;
     public FloatingJoystick Joystick;
-    public Camera camera;
+    public Transform MainCamTransform;
+    public Transform FirstViewCamTransform;
+    [HideInInspector]
+    public bool IsRun;
+    [HideInInspector]
+    public bool CanMove;
 
     private float maxSpeed = 1f;
     private Rigidbody _rigidbody;
@@ -20,27 +24,49 @@ public class Movement : MonoBehaviour
         _rigidbody = GetComponent<Rigidbody>();
         _animator = GetComponent<Animator>();
         maxSpeed = Speed;
-        startOffset = camera.transform.position - transform.position;
+        CanMove = true;
+        IsRun = false;
+        startOffset = MainCamTransform.position - transform.position;
     }
     void Update()
     {
-        if ((Joystick.Direction.magnitude > 0) != IsRun)
+        if (CanMove && (Joystick.Direction.magnitude > 0) != IsRun)
             _animator.SetBool("IsRun", IsRun = !IsRun);
-        if (Joystick.Direction.magnitude > 0.1)
+        if (CanMove && Joystick.Direction.magnitude > 0.1)
+            RotateByJoystick();
+    }
+    void FixedUpdate()
+    {
+        if (CanMove)
         {
-            var offset = camera.transform.position - transform.position;
-            var angle = AngleBetweenVectors(
-                new Vector2(offset.x, offset.z),
-                new Vector2(startOffset.x, startOffset.z));
-            direction = RotatedVector(Joystick.Direction, -angle);
-            transform.rotation = Quaternion.LookRotation(new Vector3(
-                direction.x,
-                0,
-                direction.y
-                ));
-            
+            float _maxSpeed = maxSpeed;
+            if (Joystick.Direction.magnitude == 0)
+                _maxSpeed = 0;
+            _rigidbody.velocity = new Vector3(
+                Mathf.Clamp(_rigidbody.velocity.x + direction.x * Speed, -_maxSpeed, _maxSpeed),
+                _rigidbody.velocity.y,
+                Mathf.Clamp(_rigidbody.velocity.z + direction.y * Speed, -_maxSpeed, _maxSpeed));
         }
     }
+    public void ChangeToFirstView()
+    {
+        MainCamTransform.gameObject.SetActive(false);
+        FirstViewCamTransform.gameObject.SetActive(true);
+    }
+    void RotateByJoystick()
+    {
+        var offset = MainCamTransform.position - transform.position;
+        var angle = AngleBetweenVectors(
+            new Vector2(offset.x, offset.z),
+            new Vector2(startOffset.x, startOffset.z));
+        direction = RotatedVector(Joystick.Direction, -angle);
+        transform.rotation = Quaternion.LookRotation(new Vector3(
+            direction.x,
+            0,
+            direction.y
+            ));
+    }
+
     float AngleBetweenVectors(Vector2 a, Vector2 b)
     {
         int sign = 1;
@@ -55,15 +81,5 @@ public class Movement : MonoBehaviour
             vec.x * cos + vec.y * sin,
             vec.y * cos - vec.x * sin
             );
-    }
-    void FixedUpdate()
-    {
-        float _maxSpeed = maxSpeed;
-        if (Joystick.Direction.magnitude == 0)
-            _maxSpeed = 0;
-        _rigidbody.velocity = new Vector3(
-            Mathf.Clamp(_rigidbody.velocity.x + direction.x * Speed, -_maxSpeed, _maxSpeed),
-            _rigidbody.velocity.y,
-            Mathf.Clamp(_rigidbody.velocity.z + direction.y * Speed, -_maxSpeed, _maxSpeed));
     }
 }
