@@ -29,7 +29,7 @@ namespace ProceduralToolkit.Examples
         {
             base.Awake();
             tiltAngle = (tiltMin + tiltMax) / 2;
-            
+
             if (cameraTransform == null || target == null) return;
 
             cameraTransform.rotation = rotation = Quaternion.Euler(tiltAngle, lookAngle, 0);
