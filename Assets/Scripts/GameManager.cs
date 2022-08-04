@@ -6,18 +6,24 @@ public class GameManager : MonoBehaviour
 {
     public Movement player;
     public Joystick joystick;
+    public GameObject BattleButtonsPanel;
 
     [HideInInspector]
     public bool IsBattleActive = false;
+    [HideInInspector]
+    public bool IsPlayerCanMove = true;
+    [HideInInspector]
+    public bool IsPlayerCanRotateView = true;
+    [HideInInspector]
+    public bool IsThirdCameraView = true;
 
-    public void EnableBattleMode()
+    public void EnableBattleMode(BattleZone zone)
     {
         IsBattleActive = true;
-        
-        player.ChangeToFirstView();
-        player.GetComponent<Animator>()?.SetTrigger("StartBattle");
-        player.CanMove = false;
 
-        joystick.gameObject.SetActive(false);
+        player.ChangeToFirstView(zone.enemy.transform);
+        IsPlayerCanMove = true;
+        IsPlayerCanRotateView = false;
+        BattleButtonsPanel.SetActive(true);
     }
 }

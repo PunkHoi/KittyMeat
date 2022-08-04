@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class BattleZone : MonoBehaviour
 {
+    public GameObject enemy;
+    public GameObject toHide;
+    public GameObject toShow;
+    public GameObject player;
+    public Transform playerPosition;
     private GameManager gameManager;
     
     private void Start()
@@ -14,7 +19,16 @@ public class BattleZone : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if (other.tag != "Player") return;
-        gameManager.EnableBattleMode();
-        gameObject.SetActive(false);
+        gameManager.EnableBattleMode(this);
+
+        GetComponent<CapsuleCollider>().enabled = false;
+        toHide.SetActive(false);
+        toShow.SetActive(true);
+
+        player.transform.position = playerPosition.position;
+        player.transform.rotation = playerPosition.rotation;
+
+        player.GetComponent<Animator>()?.SetTrigger("StartBattle");
+        enemy.GetComponent<Animator>()?.SetTrigger("FightPose1");
     }
 }

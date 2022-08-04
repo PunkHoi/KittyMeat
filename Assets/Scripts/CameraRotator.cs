@@ -21,6 +21,8 @@ namespace ProceduralToolkit.Examples
         public float rotationSensitivity = 0.5f;
         public float rotationSpeed = 20;
 
+
+        private GameManager gameManager;
         private float lookAngle;
         private float tiltAngle;
         private Quaternion rotation;
@@ -36,9 +38,15 @@ namespace ProceduralToolkit.Examples
             cameraTransform.position = CalculateCameraPosition();
         }
 
+        protected override void Start()
+        {
+            gameManager = FindObjectOfType<GameManager>();
+        }
+
         private void LateUpdate()
         {
-            if (cameraTransform == null || target == null) return;
+            if (cameraTransform == null || target == null || !gameManager.IsPlayerCanRotateView)
+                return;
 
             if (cameraTransform.rotation != rotation)
             {
@@ -51,7 +59,8 @@ namespace ProceduralToolkit.Examples
 
         public void OnDrag(PointerEventData eventData)
         {
-            if (cameraTransform == null || target == null) return;
+            if (cameraTransform == null || target == null || !gameManager.IsPlayerCanRotateView)
+                return;
 
             lookAngle += eventData.delta.x * rotationSensitivity;
             tiltAngle -= eventData.delta.y * rotationSensitivity;
