@@ -1376,7 +1376,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c21440e0f4563904bae463a02b76124b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 406125821}
+  player: {fileID: 919132147752217437}
   joystick: {fileID: 780347228}
   battleButtonsPanel: {fileID: 1566126054}
   battleManager: {fileID: 477033262}
@@ -1391,14 +1391,16 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 477033259}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 09a606d0c66370846998fd83e9e22249, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   playerAnimator: {fileID: 5866666020095404957}
+  gameManager: {fileID: 477033261}
   winWindow: {fileID: 1864575956}
   loseWindow: {fileID: 1341959294}
+  player: {fileID: 919132147752217437}
 --- !u!1 &479584991
 GameObject:
   m_ObjectHideFlags: 0
@@ -3146,6 +3148,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startHealth: 10
   healthBar: {fileID: 487090264}
+  health: 0
 --- !u!114 &1277930993
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4789,6 +4792,7 @@ GameObject:
   - component: {fileID: 406125822}
   - component: {fileID: 406125828}
   - component: {fileID: 406125821}
+  - component: {fileID: 5866666020095404958}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -5105,6 +5109,21 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &5866666020095404958
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 919132147752217437}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f6c35521f95d114d92157d96eb8c4a5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startHealth: 10
+  healthBar: {fileID: 0}
+  health: 0
 --- !u!1 &6543250093990544250
 GameObject:
   m_ObjectHideFlags: 0

@@ -11,7 +11,6 @@ public class EnemyController : MonoBehaviour
 
     public bool CheckForDamage()
     {
-        Debug.Log((transform.position - player.position).magnitude);
         return (transform.position - player.position).magnitude < distForDamage;
     }
     public void TryToDamage()
