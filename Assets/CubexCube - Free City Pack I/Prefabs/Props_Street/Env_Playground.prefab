@@ -11,6 +11,8 @@ GameObject:
   - component: {fileID: 9139851915925157558}
   - component: {fileID: 5294154471611005203}
   - component: {fileID: 7970362232787406297}
+  - component: {fileID: 3782115593934173992}
+  - component: {fileID: 5161493004140802754}
   m_Layer: 0
   m_Name: Env_Playground
   m_TagString: Untagged
@@ -27,7 +29,8 @@ Transform:
   m_GameObject: {fileID: 8474813838658907148}
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.6, y: 0.6, z: 0.6}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -51,6 +54,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -81,3 +85,29 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &3782115593934173992
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8474813838658907148}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 3.222107, y: 0.4005358, z: 3.2221117}
+  m_Center: {x: -0.000009437402, y: 0.2002679, z: -0.00000049670535}
+--- !u!65 &5161493004140802754
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8474813838658907148}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.38134703, y: 3.4527636, z: 0.46923625}
+  m_Center: {x: 0.023138193, y: 1.9762301, z: 0.014903247}
