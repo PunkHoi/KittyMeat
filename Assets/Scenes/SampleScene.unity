@@ -3161,9 +3161,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce78569d3800f7a40adc71954da9b48e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 543450651755672039}
+  player: {fileID: 919132147752217437}
   health: {fileID: 1277930992}
   distForDamage: 2.2
+  timeForReload: 2
 --- !u!1 &1341959294
 GameObject:
   m_ObjectHideFlags: 0
@@ -4793,6 +4794,7 @@ GameObject:
   - component: {fileID: 406125828}
   - component: {fileID: 406125821}
   - component: {fileID: 5866666020095404958}
+  - component: {fileID: 5866666020095404959}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -5124,6 +5126,19 @@ MonoBehaviour:
   startHealth: 10
   healthBar: {fileID: 0}
   health: 0
+--- !u!114 &5866666020095404959
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 919132147752217437}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1397f75f9c51dfa4ca6535c6566773d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  distForDamage: 5
 --- !u!1 &6543250093990544250
 GameObject:
   m_ObjectHideFlags: 0
