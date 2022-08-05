@@ -6,8 +6,9 @@ public class GameManager : MonoBehaviour
 {
     public Movement player;
     public Joystick joystick;
-    public GameObject BattleButtonsPanel;
-
+    public GameObject battleButtonsPanel;
+    public BattleManager battleManager;
+    
     [HideInInspector]
     public bool IsBattleActive = false;
     [HideInInspector]
@@ -24,6 +25,20 @@ public class GameManager : MonoBehaviour
         player.ChangeToFirstView(zone.enemy.transform);
         IsPlayerCanMove = true;
         IsPlayerCanRotateView = false;
-        BattleButtonsPanel.SetActive(true);
+        battleButtonsPanel.SetActive(true);
+    }
+
+    public void ExitFromBattleMode(bool IsWinner)
+    {
+        IsBattleActive = false;
+        player.ChangeToThirdView();
+        IsPlayerCanMove = true;
+        IsPlayerCanRotateView = true;
+        battleButtonsPanel.SetActive(false);
+
+        if (IsWinner)
+            battleManager.ShowWinWindow();
+        else
+            battleManager.ShowLoseWindow();
     }
 }

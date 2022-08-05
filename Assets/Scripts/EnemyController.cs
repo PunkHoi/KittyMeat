@@ -18,6 +18,5 @@ public class EnemyController : MonoBehaviour
     {
         if (CheckForDamage())
             health.TakeDamage();
-
     }
 }
