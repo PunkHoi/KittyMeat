@@ -30,11 +30,10 @@ public class Movement : MonoBehaviour
         
         curCameraTransform = MainCamTransform;
         startOffset = -curCameraTransform.forward;
-        // ChangeToFirstView();
     }
     void Update()
     {
-        bool isJoystickActive = Joystick.Direction.magnitude > 0.1;
+        bool isJoystickActive = moveDirection.magnitude > 0.1;
         if (_gameManager.IsPlayerCanMove)
         {
             if (isJoystickActive != IsRun)
@@ -50,7 +49,19 @@ public class Movement : MonoBehaviour
             }
         }
     }
-    
+
+    public Vector2 moveDirection
+    {
+        get {
+            var currentDirection = new Vector2(
+                Input.GetAxis("Horizontal"), 
+                Input.GetAxis("Vertical"));
+            if (currentDirection.magnitude > 0)
+                return currentDirection;
+            return Joystick.Direction; 
+        }
+    }
+
     void ViewToTarget()
     {
         transform.rotation = Quaternion.Lerp(
@@ -63,7 +74,7 @@ public class Movement : MonoBehaviour
         if (_gameManager.IsPlayerCanMove)
         {
             float _maxSpeed = maxSpeed;
-            if (Joystick.Direction.magnitude <= 0.1)
+            if (moveDirection.magnitude <= 0.1)
                 _maxSpeed = 0;
             _rigidbody.velocity = new Vector3(
                 Mathf.Clamp(_rigidbody.velocity.x + direction.x * Speed, -_maxSpeed, _maxSpeed),
@@ -79,6 +90,13 @@ public class Movement : MonoBehaviour
         target = _target;
         curCameraTransform = FirstViewCamTransform;
     }
+    public void ChangeToThirdView()
+    {
+        _gameManager.IsThirdCameraView = true;
+        MainCamTransform.gameObject.SetActive(true);
+        FirstViewCamTransform.gameObject.SetActive(false);
+        curCameraTransform = MainCamTransform;
+    }
     void RotateByJoystick()
     {
         UpdateDirectionByAngle();
@@ -91,7 +109,7 @@ public class Movement : MonoBehaviour
         var angle = AngleBetweenVectors(
             new Vector2(offset.x, offset.z),
             new Vector2(startOffset.x, startOffset.z));
-        direction = RotatedVector(Joystick.Direction, -angle);
+        direction = RotatedVector(moveDirection, -angle);
     }
     float AngleBetweenVectors(Vector2 a, Vector2 b)
     {
