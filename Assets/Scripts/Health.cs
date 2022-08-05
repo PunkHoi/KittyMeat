@@ -8,18 +8,20 @@ public class Health : MonoBehaviour
     public int startHealth;
     public Image healthBar;
 
-    private int curHealth;
+    [HideInInspector]
+    public int health;
 
     void Start()
     {
-        healthBar.fillAmount = 1f;
-        curHealth = startHealth;
+        if(healthBar != null)
+            healthBar.fillAmount = 1f;
+        health = startHealth;
     }
 
     public void TakeDamage()
     {
-        curHealth = Mathf.Max(0, curHealth - 1);
+        health = Mathf.Max(0, health - 1);
         if (healthBar != null)
-            healthBar.fillAmount = (float)curHealth / startHealth;
+            healthBar.fillAmount = (float)health / startHealth;
     }
 }

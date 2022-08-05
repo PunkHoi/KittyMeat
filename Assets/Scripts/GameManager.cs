@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    public Movement player;
+    public GameObject player;
     public Joystick joystick;
     public GameObject battleButtonsPanel;
     public BattleManager battleManager;
@@ -18,27 +18,44 @@ public class GameManager : MonoBehaviour
     [HideInInspector]
     public bool IsThirdCameraView = true;
 
+    private Movement playerMovement;
+    private Animator playerAnimator;
+
+    private void Start()
+    {
+        playerMovement = player.GetComponent<Movement>();
+        playerAnimator = player.GetComponent<Animator>();
+    }
+
     public void EnableBattleMode(BattleZone zone)
     {
-        IsBattleActive = true;
-
-        player.ChangeToFirstView(zone.enemy.transform);
+        playerMovement.ChangeToFirstView(zone.enemy.transform);
         IsPlayerCanMove = true;
         IsPlayerCanRotateView = false;
         battleButtonsPanel.SetActive(true);
+
+        IsBattleActive = true;
+        battleManager.enabled = true;
+        battleManager.Initialize(zone);
     }
 
-    public void ExitFromBattleMode(bool IsWinner)
+    public void ExitFromBattleMode(BattleZone zone)
     {
-        IsBattleActive = false;
-        player.ChangeToThirdView();
+        playerMovement.ChangeToThirdView();
         IsPlayerCanMove = true;
         IsPlayerCanRotateView = true;
         battleButtonsPanel.SetActive(false);
 
-        if (IsWinner)
+        if (battleManager.IsWinner)
             battleManager.ShowWinWindow();
         else
             battleManager.ShowLoseWindow();
+        zone.toShow.SetActive(false);
+        zone.enemy.SetActive(false);
+
+        playerAnimator.SetTrigger("StandInIdle");
+
+        IsBattleActive = false;
+        battleManager.enabled = false;
     }
 }

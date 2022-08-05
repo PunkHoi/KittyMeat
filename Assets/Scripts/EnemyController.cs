@@ -5,18 +5,41 @@ using UnityEngine;
 
 public class EnemyController : MonoBehaviour
 {
-    public Transform player;
+    public GameObject player;
     public Health health;
     public float distForDamage;
+    public float timeForReload;
+
+    private Transform playerTransform;
+    private Health playerHealth;
+
+    private bool isAttacking;
+
+    private void Start()
+    {
+        playerTransform = player.transform;
+        playerHealth = player.GetComponent<Health>();
+    }
+
+    public void Update()
+    {
+        if (!isAttacking)
+            StartCoroutine(TryToDamage());
+    }
 
     public bool CheckForDamage()
     {
-        Debug.Log((transform.position - player.position).magnitude);
-        return (transform.position - player.position).magnitude < distForDamage;
+        return (transform.position - playerTransform.position).magnitude < distForDamage;
     }
-    public void TryToDamage()
+    private IEnumerator TryToDamage()
     {
+        isAttacking = true;
         if (CheckForDamage())
-            health.TakeDamage();
+        {
+            playerHealth.TakeDamage();
+            Debug.Log("Получил пизды");
+        }
+        yield return new WaitForSeconds(timeForReload);
+        isAttacking = false;
     }
 }
