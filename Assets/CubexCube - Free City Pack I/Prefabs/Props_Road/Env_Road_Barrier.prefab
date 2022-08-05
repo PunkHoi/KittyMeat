@@ -11,6 +11,9 @@ GameObject:
   - component: {fileID: 8715276567179847525}
   - component: {fileID: 5718791189252368576}
   - component: {fileID: 7546288052366580746}
+  - component: {fileID: 3009594556351618038}
+  - component: {fileID: 6831389142233074841}
+  - component: {fileID: 2246101229311619074}
   m_Layer: 0
   m_Name: Env_Road_Barrier
   m_TagString: Untagged
@@ -28,6 +31,7 @@ Transform:
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -51,6 +55,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -81,3 +86,42 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &3009594556351618038
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8338750543647882719}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.3082111, y: 1.0009711, z: 0.39015925}
+  m_Center: {x: -0.008071274, y: 0.50048554, z: 0.006187491}
+--- !u!65 &6831389142233074841
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8338750543647882719}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 3.1297555, y: 0.12820351, z: 0.05226463}
+  m_Center: {x: -1.4515297, y: 0.82277864, z: 0.21580634}
+--- !u!65 &2246101229311619074
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8338750543647882719}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.09217119, y: 0.88934916, z: 0.16635096}
+  m_Center: {x: -2.970322, y: 0.44467458, z: 0.21892393}
