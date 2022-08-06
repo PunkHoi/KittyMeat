@@ -31,13 +31,22 @@ public class EnemyController : MonoBehaviour
     {
         return (transform.position - playerTransform.position).magnitude < distForDamage;
     }
+    public void GetEmotionalDamage()
+    {
+        if (CheckForDamage())
+        {
+            health.TakeDamage();
+            Debug.Log("Враг получил пизды");
+        }
+        TryToDamage();
+    }
     private IEnumerator TryToDamage()
     {
         isAttacking = true;
         if (CheckForDamage())
         {
             playerHealth.TakeDamage();
-            Debug.Log("Получил пизды");
+            Debug.Log("Мы получили пизды");
         }
         yield return new WaitForSeconds(timeForReload);
         isAttacking = false;
