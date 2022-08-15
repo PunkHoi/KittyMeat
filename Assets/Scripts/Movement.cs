@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -19,6 +20,7 @@ public class Movement : MonoBehaviour
     private Transform target;
     private Vector3 startOffset;
     private Vector2 direction;
+    private bool possibleToClimb=false;
 
     void Start()
     {
@@ -76,11 +78,29 @@ public class Movement : MonoBehaviour
             float _maxSpeed = maxSpeed;
             if (moveDirection.magnitude <= 0.1)
                 _maxSpeed = 0;
-            _rigidbody.velocity = new Vector3(
+            /*_rigidbody.velocity = new Vector3(
                 Mathf.Clamp(_rigidbody.velocity.x + direction.x * Speed, -_maxSpeed, _maxSpeed),
                 _rigidbody.velocity.y,
+                Mathf.Clamp(_rigidbody.velocity.z + direction.y * Speed, -_maxSpeed, _maxSpeed));*/
+            _rigidbody.velocity = new Vector3(
+                Mathf.Clamp(_rigidbody.velocity.x + direction.x * Speed, -_maxSpeed, _maxSpeed),
+                Mathf.Clamp(_rigidbody.velocity.y + Convert.ToSingle(Input.GetKey(KeyCode.RightShift)&possibleToClimb) * Speed, -maxSpeed, maxSpeed),
                 Mathf.Clamp(_rigidbody.velocity.z + direction.y * Speed, -_maxSpeed, _maxSpeed));
+            
         }
+    }
+    private void OnCollisionStay(Collision collision)
+    {
+        possibleToClimb = true;
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        possibleToClimb = true;
+    }
+    private void OnCollisionExit(Collision collision)
+    {
+        possibleToClimb = false;
     }
     public void ChangeToFirstView(Transform _target)
     {

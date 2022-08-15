@@ -42,6 +42,7 @@ public class BattleManager : MonoBehaviour
     }
     public void LeftAttack()
     {
+        
         playerAnimator.SetTrigger("LeftAttack");
     }
     public void RightAttack()

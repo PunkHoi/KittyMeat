@@ -9,9 +9,13 @@ public class EnemyController : MonoBehaviour
     public Health health;
     public float distForDamage;
     public float timeForReload;
-
+    public GameManager gameManager;
     private Transform playerTransform;
     private Health playerHealth;
+    private Animator enemyAnimator;
+    private Animator playerAnimator;
+    private float prevCurrentTime;
+    
 
     private bool isAttacking;
 
@@ -19,12 +23,17 @@ public class EnemyController : MonoBehaviour
     {
         playerTransform = player.transform;
         playerHealth = player.GetComponent<Health>();
+        enemyAnimator = GetComponent<Animator>();
+        playerAnimator = player.GetComponent<Animator>();
+        prevCurrentTime= Time.time;
     }
 
     public void Update()
     {
-        if (!isAttacking)
-            StartCoroutine(TryToDamage());
+        //to-do: переписать на while а не кучу вызовов в update()
+        if(gameManager.IsBattleActive)
+            if (!isAttacking)
+                StartCoroutine(TryToDamage());
     }
 
     public bool CheckForDamage()
@@ -35,10 +44,18 @@ public class EnemyController : MonoBehaviour
     {
         if (CheckForDamage())
         {
-            health.TakeDamage();
-            Debug.Log("Враг получил пизды");
+            if (Time.time - prevCurrentTime > timeForReload-1)
+            {
+                health.TakeDamage();
+                playGotDamageAnimation(enemyAnimator);
+                Debug.Log("Враг получил по морде");
+                prevCurrentTime= Time.time;
+            }
         }
-        TryToDamage();
+    }
+    void playGotDamageAnimation(Animator animator)
+    {
+        animator?.SetTrigger("Probil");
     }
     private IEnumerator TryToDamage()
     {
@@ -46,7 +63,7 @@ public class EnemyController : MonoBehaviour
         if (CheckForDamage())
         {
             playerHealth.TakeDamage();
-            Debug.Log("Мы получили пизды");
+            Debug.Log("Мы получили по морде");
         }
         yield return new WaitForSeconds(timeForReload);
         isAttacking = false;

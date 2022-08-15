@@ -13,11 +13,14 @@ public class Health : MonoBehaviour
 
     void Start()
     {
-        if(healthBar != null)
-            healthBar.fillAmount = 1f;
+        resetHealthBar();
         health = startHealth;
     }
-
+    public void resetHealthBar()
+    {
+        if (healthBar != null)
+            healthBar.fillAmount = 1f;
+    }
     public void TakeDamage()
     {
         health = Mathf.Max(0, health - 1);

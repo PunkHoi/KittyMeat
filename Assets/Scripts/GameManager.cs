@@ -29,6 +29,7 @@ public class GameManager : MonoBehaviour
 
     public void EnableBattleMode(BattleZone zone)
     {
+        Debug.Log("Battle mode enabled");
         playerMovement.ChangeToFirstView(zone.enemy.transform);
         IsPlayerCanMove = true;
         IsPlayerCanRotateView = false;
